@@ -11,19 +11,25 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CHA_STATUS")
-public class Status implements Serializable {
+@Table(name = "CHA_EMPRESA")
+public class Empresa implements Serializable {
 
-	private static final long serialVersionUID = -3877556831749615969L;
+	private static final long serialVersionUID = -6450032975969479810L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "status_id_seq")
-	@SequenceGenerator(name = "status_id_seq", sequenceName = "status_id_seq", allocationSize = 1)
-	@Column(name = "status_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "empresa_id_seq")
+	@SequenceGenerator(name = "empresa_id_seq", sequenceName = "empresa_id_seq", allocationSize = 1)
+	@Column(name = "empresa_id")
 	private Long id;
 
 	@Column(name = "nome", nullable = false, length = 30)
 	private String nome;
+
+	@Column(name = "cnpj", nullable = false, length = 14, unique = true)
+	private String cnpj;
+
+	@Column(name = "email", length = 100)
+	private String email;
 
 	public Long getId() {
 		return id;
@@ -41,12 +47,13 @@ public class Status implements Serializable {
 		this.nome = nome;
 	}
 
-	public Status(Long id, String nome) {
+	public Empresa(Long id, String nome, String cnpj) {
 		this.id = id;
 		this.nome = nome;
+		this.cnpj = cnpj;
 	}
 
-	public Status() {
+	public Empresa() {
 	}
 
 	@Override
@@ -65,7 +72,7 @@ public class Status implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Status other = (Status) obj;
+		Empresa other = (Empresa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

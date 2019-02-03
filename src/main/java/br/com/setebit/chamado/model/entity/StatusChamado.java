@@ -1,53 +1,43 @@
 package br.com.setebit.chamado.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.setebit.chamado.enumerated.StatusEnum;
+
 @Entity
-@Table(name = "CHA_STATUS")
-public class Status implements Serializable {
+@Table(name = "CHA_STATUS_CHAMADO")
+public class StatusChamado implements Serializable {
 
 	private static final long serialVersionUID = -3877556831749615969L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "status_id_seq")
-	@SequenceGenerator(name = "status_id_seq", sequenceName = "status_id_seq", allocationSize = 1)
-	@Column(name = "status_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stat_cham_id_seq")
+	@SequenceGenerator(name = "stat_cham_id_seq", sequenceName = "stat_cham_id_seq", allocationSize = 1)
+	@Column(name = "stat_cham_id")
 	private Long id;
 
-	@Column(name = "nome", nullable = false, length = 30)
-	private String nome;
+	@Column(nullable = false)
+	private Date inicio;
 
-	public Long getId() {
-		return id;
-	}
+	@Column()
+	private Date fim;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Column(name = "observacao")
+	private String observacao;
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Status(Long id, String nome) {
-		this.id = id;
-		this.nome = nome;
-	}
-
-	public Status() {
-	}
+	@Enumerated(EnumType.ORDINAL)
+	private StatusEnum status;
 
 	@Override
 	public int hashCode() {
@@ -65,7 +55,7 @@ public class Status implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Status other = (Status) obj;
+		StatusChamado other = (StatusChamado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
